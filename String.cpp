@@ -128,6 +128,14 @@ char String::operator[](size_t index) const
     }
 }
 
+char& String::operator[](size_t index)
+{
+    if (index < this->getLength())
+    {
+        return this->mData[index];
+    } 
+}
+
 bool String::operator==(const String& other) const
 {
     return this->mCapacity == other.mCapacity && strcmp(this->mData, other.mData) == 0;
@@ -136,6 +144,7 @@ bool String::operator!=(const String& other) const
 {
     return !(*this == other);
 }
+
 
 std::ostream& operator<<(std::ostream& out, const String& str)
 {

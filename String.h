@@ -23,12 +23,12 @@ public:
 	String& operator+(const String& other)const;
 	String& operator+=(const String& other);
 	char operator[](size_t index) const;
+	char& operator[](size_t index);
 	bool operator==(const String& other) const;
 	bool operator!=(const String& other) const;
 
 	void copyDatas(const String&, const char* data, size_t capacity);
 	void erase();
-	
 	friend std::ostream& operator<<(std::ostream& out, const String& str);
 	friend std::istream& operator>>(std::istream& in, String& str);
 
