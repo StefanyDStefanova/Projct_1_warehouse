@@ -60,12 +60,12 @@ String::~String()
     erase();
 }
 
-size_t String::get_length() const
+size_t String::getLength() const
 {
     return strlen(this->mData);
 }
 
-size_t String::get_capacity() const
+size_t String::getCapacity() const
 {
     return this->mCapacity;
 }
@@ -77,26 +77,26 @@ String& String::append(const String& other)
 
 void String::pushBack(char symbol)
 {
-    if ((this->mCapacity * 3) / 4 < this->get_length() + 1)
+    if ((this->mCapacity * 3) / 4 < this->getLength() + 1)
     {
         mCapacity *= 2;
         this->resize(mCapacity);
     }
 
-    size_t oldSize = this->get_length();
+    size_t oldSize = this->getLength();
     this->mData[oldSize] = symbol;
     this->mData[oldSize + 1] = 0;
 }
 
 bool String::isEmpty() const
 {
-    return this->get_length() == 0;
+    return this->getLength() == 0;
 }
 
 String& String::append(const char* other)
 {
     bool isDirty = false;
-    while ((this->mCapacity * 3) / 4 < strlen(other) + this->get_length())
+    while ((this->mCapacity * 3) / 4 < strlen(other) + this->getLength())
     {
         isDirty = true;
         this->mCapacity *= 2;
@@ -115,6 +115,19 @@ String& String::operator+(const String& other) const
     return outcome->append(other);
 }
 
+String& String::operator+=(const String& other)
+{
+    return this->append(other);
+}
+
+char String::operator[](size_t index) const
+{
+    if (index < this->getLength())
+    {
+        return this->mData[index];
+    }
+}
+
 bool String::operator==(const String& other) const
 {
     return this->mCapacity == other.mCapacity && strcmp(this->mData, other.mData) == 0;
@@ -126,7 +139,7 @@ bool String::operator!=(const String& other) const
 
 std::ostream& operator<<(std::ostream& out, const String& str)
 {
-    out<<str.get_length()<< ' ' <<str.mData;
+    out<<str.getLength()<< ' ' <<str.mData;
     return out;
 }
 

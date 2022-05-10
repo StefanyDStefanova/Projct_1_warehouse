@@ -12,8 +12,8 @@ public:
 	String& operator=(const String& other);
 	~String();
 
-	size_t get_length() const;
-	size_t get_capacity() const;
+	size_t getLength() const;
+	size_t getCapacity() const;
 
 	String& append(const String& other);
 	void pushBack(char c);
@@ -21,6 +21,8 @@ public:
 	String& append(const char* other);
 
 	String& operator+(const String& other)const;
+	String& operator+=(const String& other);
+	char operator[](size_t index) const;
 	bool operator==(const String& other) const;
 	bool operator!=(const String& other) const;
 
