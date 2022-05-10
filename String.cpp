@@ -1,4 +1,12 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "String.h"
+
+void String::copyDatas(const String& other, const char* data, size_t capacity)
+{
+    this->mCapacity = other.mCapacity;
+    char* result = new char[capacity + 1];
+    this->mData = strcpy(result, data);
+}
 
 void String::erase()
 {
@@ -9,7 +17,7 @@ void String::resize(size_t capacity)
 {
     char* temp = this->mData;
     this->mData = new char[capacity + 1];
-    strcpy(this->mData, temp);
+    strcpy_s(this->mData,sizeof(this->mData), temp);
     delete[] temp;
 }
 
@@ -34,9 +42,7 @@ String::String(const char* data)
 
 String::String(const String& other)
 {
-    mCapacity = other.mCapacity;
-    char* dynCopy = new char[mCapacity + 1];
-    this->mData = strcpy(dynCopy, other.mData);
+    copyDatas(other, mData, mCapacity);
 }
 
 String& String::operator=(const String& other)
@@ -44,9 +50,7 @@ String& String::operator=(const String& other)
     if (this != &other)
     {
         erase();
-        this->mCapacity = other.mCapacity;
-        char* dynCopy = new char[mCapacity + 1];
-        this->mData = strcpy(dynCopy, other.mData);
+        copyDatas(other, mData, mCapacity);
     }
     return *this;
 }
@@ -66,4 +70,62 @@ size_t String::get_capacity() const
     return this->mCapacity;
 }
 
+String& String::append(const String& other)
+{
+    return this->append(other.mData);
+}
 
+void String::pushBack(char symbol)
+{
+    if ((this->mCapacity * 3) / 4 < this->get_length() + 1)
+    {
+        mCapacity *= 2;
+        this->resize(mCapacity);
+    }
+
+    size_t oldSize = this->get_length();
+    this->mData[oldSize] = symbol;
+    this->mData[oldSize + 1] = 0;
+}
+
+bool String::isEmpty() const
+{
+    return this->get_length() == 0;
+}
+
+String& String::append(const char* other)
+{
+    bool isDirty = false;
+    while ((this->mCapacity * 3) / 4 < strlen(other) + this->get_length())
+    {
+        isDirty = true;
+        this->mCapacity *= 2;
+    }
+    if (isDirty)
+    {
+        resize(this->mCapacity);
+    }
+    strcat(this->mData, other);
+    return *this;
+}
+
+String& String::operator+(const String& other) const
+{
+    String* outcome= new String(*this);
+    return outcome->append(other);
+}
+
+bool String::operator==(const String& other) const
+{
+    return this->mCapacity == other.mCapacity && strcmp(this->mData, other.mData) == 0;
+}
+bool String::operator!=(const String& other) const
+{
+    return !(*this == other);
+}
+
+std::ostream& operator<<(std::ostream& out, const String& str)
+{
+    out<<str.get_length()<< ' ' <<str.mData;
+    return out;
+}

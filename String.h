@@ -12,20 +12,23 @@ public:
 	String& operator=(const String& other);
 	~String();
 
-	size_t length() const;
-	size_t capacity() const;
+	size_t get_length() const;
+	size_t get_capacity() const;
 
-	String& append(const char*);
+	String& append(const String& other);
 	void pushBack(char c);
 	bool isEmpty() const;
+	String& append(const char* other);
 
-	String& operator+(const String&)const;
-	bool operator!=(const String&) const;
-	bool operator==(const String&) const;
+	String& operator+(const String& other)const;
+	bool operator==(const String& other) const;
+	bool operator!=(const String& other) const;
 
+	void copyDatas(const String&, const char* data, size_t capacity);
 	void erase();
 	
 	friend std::ostream& operator<<(std::ostream& out, const String& str);
+	
 
 private:
 	char* mData{ nullptr };
