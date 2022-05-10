@@ -129,3 +129,12 @@ std::ostream& operator<<(std::ostream& out, const String& str)
     out<<str.get_length()<< ' ' <<str.mData;
     return out;
 }
+
+std::istream& operator>>(std::istream& in, String& str)
+{
+    std::cout << str.mData;
+    in >> str.mData;
+    std::cout << str.mCapacity;
+    in >> str.mCapacity;
+    return in;
+}

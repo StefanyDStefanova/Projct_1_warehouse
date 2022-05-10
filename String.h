@@ -28,6 +28,8 @@ public:
 	void erase();
 	
 	friend std::ostream& operator<<(std::ostream& out, const String& str);
+	friend std::istream& operator>>(std::istream& in, String& str);
+
 	
 
 private:
