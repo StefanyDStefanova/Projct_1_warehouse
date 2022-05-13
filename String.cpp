@@ -126,6 +126,7 @@ char String::operator[](size_t index) const
     {
         return this->mData[index];
     }
+    throw;
 }
 
 char& String::operator[](size_t index)
@@ -134,6 +135,7 @@ char& String::operator[](size_t index)
     {
         return this->mData[index];
     } 
+    throw;
 }
 
 bool String::operator==(const String& other) const
